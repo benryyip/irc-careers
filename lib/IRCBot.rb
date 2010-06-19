@@ -15,8 +15,6 @@ require 'yaml'   # Nothing like a good sweet potato in logarithmic space.
 class IRCBot
 
     # USEFUL REGEXES
-    CHAN_PRIV_MSG = /:(.*)!.*PRIVMSG #wonted :(.*)$/
-    CHAN_MSG = /#{@channel}/
     PING_MSG = /^PING :(.*)$/
 
     # INSTANCE VARIABLES
@@ -27,10 +25,10 @@ class IRCBot
     def initialize(settings)
         @settings = settings
         
-        @botname = settings['botname']
-        @server =  settings['server']
-        @port =    settings['port']
-        @channel = settings['channel']
+        @botname = settings["botname"]
+        @server =  settings["server"]
+        @port =    settings["port"]
+        @channel = settings["channel"]
         
         @socket = TCPSocket.open(@server, @port)
 
@@ -65,11 +63,6 @@ class IRCBot
             else
                 bot_main(line)
             end
-
-            # Gathers everything that's been sent to #{@channel}
-            # if line.match(CHAN_MSG)
-            #     bot_main(line)
-            # end
         end
     end
 
