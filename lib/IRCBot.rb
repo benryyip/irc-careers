@@ -16,25 +16,21 @@ class IRCBot
 
     # USEFUL REGEXES
     CHAN_PRIV_MSG = /:(.*)!.*PRIVMSG #wonted :(.*)$/
-    CHAN_MSG = /##{@channel}/
+    CHAN_MSG = /#{@channel}/
     PING_MSG = /^PING :(.*)$/
 
     # INSTANCE VARIABLES
-    attr_reader :config, :socket
+    attr_reader :settings, :socket
     attr_reader :botname, :channel, :port, :server
 
-    # Given a YAML configuration file, processes and connects to an IRC server.
-    def initialize(config_filename)
-        unless File.exists?(config_filename)
-            puts "ERROR: #{config_filename} isn't a real configuration file."
-        end
+    # Given a hash of settings, processes and connects to an IRC server.
+    def initialize(settings)
+        @settings = settings
         
-        @config = YAML::load_file(config_filename)
-        
-        @botname = config['botname']
-        @server =  config['server']
-        @port =    config['port']
-        @channel = config['channel']
+        @botname = settings['botname']
+        @server =  settings['server']
+        @port =    settings['port']
+        @channel = settings['channel']
         
         @socket = TCPSocket.open(@server, @port)
 
@@ -52,7 +48,7 @@ class IRCBot
     def connect
         say "NICK #{@botname}"
         say "USER #{@botname} 0 * #{@botname}"
-        say "JOIN ##{@channel}"
+        say "JOIN #{@channel}"
     end
 
     # The main loop.
@@ -84,7 +80,12 @@ class IRCBot
 
     # Says #{msg} to #{@channel}.
     def say_to_chan(msg)
-        say "PRIVMSG ##{@channel} :#{message}"
+        say "PRIVMSG #{@channel} :#{message}"
+    end
+
+    # Exit!
+    def quit
+        say "QUIT"
     end
 end
 

@@ -7,13 +7,13 @@
 #           or as used in common speech, the "Do Whatever The F*** You Want
 #           License As Long As You Give Credit To The Right People" License.
 
-require '../lib/IRCBot.rb'
+require 'IRCBot'
 
 class EchoBot < IRCBot
 
-    # Given a YAML configuration file, processes and connects to an IRC server.
-    def initialize(config_filename)
-        super(config_filename)
+    # Given a hash of settings, processes and connects to an IRC server.
+    def initialize(settings)
+        super(settings)
     end
 
     # Does the bulk of the work, processes messages that address #{@channel}.
@@ -25,9 +25,12 @@ class EchoBot < IRCBot
 
 end
 
-# Main "method."
-if $0 == __FILE__
-    echobot = EchoBot.new("../config/batman.yml")
-    trap("INT") { bot.quit }
-    echobot.run
-end
+settings = { "botname" => "Batman-bot",
+             "server" =>  "irc.rizon.net",
+             "port" =>    6667,
+             "channel" => "#wontest"
+}
+
+echobot = EchoBot.new(settings)
+trap("INT") { echobot.quit }
+echobot.run
