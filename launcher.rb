@@ -17,14 +17,14 @@ def usage
     puts "Usage: ./launcher.rb [botname] [command]"
     puts
     puts "Available bots:"
-    puts "Echo - A simple bot that just reads all server output."
-    puts "Lumberjack - A bot that logs channel activity."
+    puts "Echo          A simple bot that just reads all server output."
+    puts "Lumberjack    A bot that logs channel activity."
     puts
     puts "Commands:"
-    puts "Start - Start a bot."
-    puts "Stop - Stops a bot."
-    puts "Restart - Stops, then starts a bot."
-    puts "Run - Runs a bot as an application, instead of a daemon."
+    puts "Start         Start a bot."
+    puts "Stop          Stops a bot."
+    puts "Restart       Stops, then starts a bot."
+    puts "Run           Runs a bot as an application, instead of a daemon, duh."
     puts
     puts "Example: ./launcher.rb echo start"
 end
@@ -72,6 +72,4 @@ if $0 == __FILE__
         usage
         exit
     end
-    
-    Daemons.run('bots/EchoBot.rb')
 end

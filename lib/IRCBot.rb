@@ -35,7 +35,7 @@ class IRCBot
         connect # to IRC channel
     end
 
-    # Does the bulk of the work, processes messages that address #{@channel}.
+    # Does the bulk of the work, processes messages.
     #
     # Should be overridden by subclasses.
     def bot_main(line)
